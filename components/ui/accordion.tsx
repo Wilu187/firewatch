@@ -25,16 +25,16 @@ export function AccordionItem({ value, index, title, children }: AccordionItemPr
       <BaseAccordion.Header className="m-0">
         <BaseAccordion.Trigger
           className={cn(
-            "group flex min-h-[50px] w-full cursor-pointer items-center justify-between gap-4 px-5 py-3 text-left md:py-0",
+            "group flex min-h-[50px] w-full cursor-pointer items-center justify-between gap-4 px-5 py-3 text-left",
             "border-[0.5px] border-line bg-white transition-colors hover:bg-surface",
             "focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-brand",
           )}
         >
-          <span className="flex min-w-0 items-center gap-2.5">
+          <span className="flex min-w-0 items-baseline gap-3">
             {index !== undefined && (
-              <span className="text-lg font-bold text-brand">{String(index).padStart(2, "0")}</span>
+              <span className="text-base font-bold text-brand tabular-nums">{String(index).padStart(2, "0")}</span>
             )}
-            <span className="text-sm font-medium text-black md:truncate">{title}</span>
+            <span className="text-base leading-snug font-semibold text-black">{title}</span>
           </span>
           <Chevron />
         </BaseAccordion.Trigger>
@@ -45,7 +45,7 @@ export function AccordionItem({ value, index, title, children }: AccordionItemPr
           "data-ending-style:h-0 data-starting-style:h-0",
         )}
       >
-        <Text className="max-w-[520px] px-5 pt-2.5 text-black">{children}</Text>
+        <Text className="max-w-[520px] px-5 pt-3 pb-2 text-ink">{children}</Text>
       </BaseAccordion.Panel>
     </BaseAccordion.Item>
   );

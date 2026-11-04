@@ -20,10 +20,10 @@ import { ContactForm } from "./contact-form";
 
 export function Hero() {
   return (
-    <section id="home" className="relative flex flex-col items-center overflow-hidden text-white sm:min-h-svh md:min-h-[1024px]">
+    <section id="home" className="relative flex flex-col items-center justify-center overflow-hidden text-white sm:min-h-svh">
       <div aria-hidden className="absolute inset-0 overflow-hidden">
         <Image
-          src="/images/hero.png"
+          src="/images/hero.jpg"
           alt=""
           fill
           priority
@@ -33,10 +33,11 @@ export function Hero() {
         <div className="absolute inset-0 bg-black/15" />
       </div>
 
-      <div className="relative flex w-full flex-col items-center gap-12 px-2.5 pt-[144px] pb-20 sm:pb-15 md:gap-20 md:pt-[178px]">
-        <div className="flex w-full max-w-[400px] flex-col items-center gap-[30px] border-5 border-white/20 bg-black/22 px-5 py-8 sm:h-[506px] sm:w-[554px] sm:max-w-none sm:px-[120px] sm:py-10">
+      {/* pt = wysokość nawigacji (84 / 96px) + oddech; treść centrowana w pozostałej wysokości ekranu. */}
+      <div className="relative flex w-full flex-col items-center gap-10 px-2.5 pt-[120px] pb-16 sm:gap-12 md:pt-[136px] md:pb-20">
+        <div className="flex w-full max-w-[400px] flex-col items-center gap-[30px] border-5 border-white/20 bg-black/22 px-3 py-8 sm:w-auto sm:max-w-none sm:px-16 sm:py-12">
           <img src="/icons/logo-hero.svg" width={234} height={206} alt="FireWatch" className="h-auto w-[170px] shrink-0 sm:w-[234px]" />
-          <h1 className="w-full bg-night p-5 text-center text-lg font-medium uppercase sm:w-auto sm:px-10 sm:py-[30px] sm:text-3xl sm:whitespace-nowrap">
+          <h1 className="w-full bg-night px-3 py-5 text-center text-[clamp(16px,4.8vw,20px)] leading-[1.3] font-semibold tracking-[0.02em] uppercase sm:w-auto sm:px-10 sm:py-[30px] sm:text-4xl sm:leading-[1.25] sm:whitespace-nowrap">
             Kompleksowe <br />
             rozwiązania BHP i PPOŻ <br />
             dla Twojej firmy
@@ -73,7 +74,7 @@ export function WhyUs() {
             </>
           }
         />
-        <div className="mt-12 flex flex-wrap items-start justify-center gap-8 sm:mt-20 sm:gap-x-[103px] sm:gap-y-12.5">
+        <div className="mt-12 grid justify-items-center gap-y-10 sm:mt-20 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-12.5 lg:gap-x-[103px]">
           {REASONS.map((r) => (
             <FeatureItem key={r.title} icon={r.icon} title={r.title}>
               {r.text}
@@ -91,18 +92,18 @@ export function ConsultationCta() {
   return (
     <Section tone="none" spacing="none" className="relative overflow-hidden px-6 text-snow">
       <div aria-hidden className="absolute inset-0">
-        <Image src="/images/cta.png" alt="" fill sizes="100vw" className="object-cover object-bottom" />
+        <Image src="/images/cta.jpg" alt="" fill sizes="100vw" className="object-cover object-[center_40%]" />
         <div className="absolute inset-0 bg-black/45 sm:bg-black/20" />
       </div>
       <Container className="relative py-16 sm:py-25">
-        <div className="flex max-w-[834px] flex-col items-center gap-10 sm:gap-20">
-          <Heading variant="display" tone="inverse" className="max-w-[600px] self-stretch">
+        <div className="flex max-w-[834px] flex-col items-stretch gap-10 sm:items-start sm:gap-16">
+          <Heading variant="display" tone="inverse" className="max-w-[600px]">
             Zrób pierwszy krok w kierunku bezpieczeństwa!
           </Heading>
-          <div className="flex flex-col gap-5 self-stretch sm:gap-[33px]">
+          <div className="flex max-w-[680px] flex-col gap-5 sm:gap-6">
             <Text variant="prose">
               Nie czekaj, aż problemy związane z BHP i PPOŻ staną się realnym zagrożeniem
-              <br className="max-md:hidden" /> dla Twojej firmy.
+              dla Twojej firmy.
             </Text>
             <Text variant="prose">
               Skorzystaj z naszej bezpłatnej konsultacji, podczas której omówimy Twoje potrzeby i zaproponujemy
@@ -139,7 +140,8 @@ export function Trainings() {
             </Text>
           }
         />
-        <div className="mt-12 flex flex-wrap items-stretch justify-center gap-6 sm:mt-20 lg:flex-nowrap lg:justify-between">
+        {/* Mobile: lista wierszy. Tablet: 3 + 2 wyśrodkowane. Desktop: 5 w rzędzie. */}
+        <div className="mt-10 flex flex-col gap-3 sm:mt-20 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6 lg:flex-nowrap">
           {TRAININGS.map((t) => (
             <StepCard key={t.marker} marker={t.marker} title={t.title}>
               {t.text}
@@ -155,16 +157,18 @@ export function Trainings() {
 
 export function Values() {
   return (
-    <Section id="o-nas" tone="alt" spacing="none" className="md:pl-[50px]">
-      <div className="ml-auto flex max-w-[1390px] flex-col items-stretch md:flex-row md:items-start md:justify-center md:gap-20">
-        <div className="min-w-0 flex-1 px-6 pb-12 md:max-w-[540px] md:px-0 md:pb-10">
+    // Kolumna tekstu startuje na osi kontenera (pl-spine), zdjęcie dochodzi do prawej krawędzi
+    // i rozciąga się na całą wysokość sekcji, niezależnie od otwartego punktu akordeonu.
+    <Section id="o-nas" tone="alt" spacing="none" className="md:pl-spine">
+      <div className="flex flex-col md:flex-row md:gap-12 lg:gap-20">
+        <div className="px-6 pt-16 pb-12 md:w-[400px] md:shrink-0 md:px-0 md:py-20 lg:w-[460px]">
           <SectionHeader
             align="start"
-            kicker="Nasze wartości i podejście do bezpieczeństwa"
             title="Twoje bezpieczeństwo – nasza misja"
-            className="pt-15 pb-[30px] md:pl-10"
+            lead="Nasze wartości i podejście do bezpieczeństwa."
+            className="mb-8"
           />
-          <Accordion defaultValue={["value-1"]}>
+          <Accordion defaultValue={["value-0"]}>
             {VALUES.map((v, i) => (
               <AccordionItem key={v.title} value={`value-${i}`} index={i + 1} title={v.title}>
                 {v.body}
@@ -172,13 +176,14 @@ export function Values() {
             ))}
           </Accordion>
         </div>
-        <div className="relative aspect-770/477 w-full shrink-0 md:aspect-auto md:h-[477px] md:w-[53.5vw] 2xl:w-[770px]">
+        <div className="relative aspect-770/477 w-full md:aspect-auto md:min-h-[477px] md:min-w-0 md:flex-1">
           <Image
-            src="/images/values.png"
-            alt="Pracownik w kasku i kamizelce odblaskowej przy szafce z gaśnicą"
+            src="/images/values.jpg"
+            alt="Czerwona stacja zaworów instalacji tryskaczowej w pomieszczeniu technicznym"
             fill
-            sizes="(max-width: 960px) 100vw, 770px"
-            className="object-cover"
+            sizes="(max-width: 960px) 100vw, 60vw"
+            // Główny motyw (zawór i elektrozawór) jest po prawej – przy wąskiej kolumnie przycinamy głównie lewą stronę.
+            className="object-cover object-[70%_center]"
           />
         </div>
       </div>
@@ -201,7 +206,7 @@ export function Testimonials() {
             </Text>
           }
         />
-        <div className="mt-12 flex flex-wrap items-start justify-center gap-x-[103px] gap-y-12.5 sm:mt-20">
+        <div className="mt-12 grid justify-items-center gap-y-14 sm:mt-20 min-[720px]:grid-cols-3 min-[720px]:gap-x-6 lg:gap-x-12">
           {TESTIMONIALS.map((t) => (
             <TestimonialCard key={t.name} avatar={t.avatar} name={t.name} role={t.role}>
               {t.text}
@@ -217,19 +222,25 @@ export function Testimonials() {
 
 export function Contact() {
   return (
-    <Section id="kontakt" tone="dark" spacing="none" className="md:pr-20">
-      <div className="flex max-w-[1360px] flex-col md:flex-row md:items-start md:justify-center md:gap-20">
-        <div className="relative order-2 aspect-770/477 w-full shrink-0 md:order-none md:aspect-auto md:h-[513px] md:w-[53.5vw] 2xl:w-[770px]">
+    // Lustro sekcji „O nas”: zdjęcie od lewej krawędzi, formularz kończy się na prawej osi kontenera.
+    <Section id="kontakt" tone="dark" spacing="none" className="md:pr-spine">
+      <div className="flex flex-col md:flex-row md:gap-12 lg:gap-20">
+        <div className="relative order-2 aspect-770/477 w-full md:order-none md:aspect-auto md:min-h-[513px] md:min-w-0 md:flex-1">
           <Image
-            src="/images/contact.png"
+            src="/images/contact.jpg"
             alt="Dłonie wskazujące na ekran laptopa"
             fill
-            sizes="(max-width: 960px) 100vw, 770px"
-            className="object-cover"
+            sizes="(max-width: 960px) 100vw, 60vw"
+            // Wysoka kolumna przycina boki – trzymamy ekran laptopa i wskazującą dłoń (lewa część kadru).
+            className="object-cover object-[30%_center]"
           />
         </div>
-        <div className="flex min-w-0 flex-1 flex-col items-center gap-12.5 px-6 py-15 md:px-0 md:pt-15 md:pb-9">
-          <SectionHeader tone="inverse" kicker="Wypełnij formularz, a skontaktujemy się z Tobą wkrótce!" title="Masz dodatkowe pytania?" />
+        <div className="flex flex-col items-center gap-10 px-6 py-16 md:w-[400px] md:shrink-0 md:px-0 md:py-20 lg:w-[470px]">
+          <SectionHeader
+            tone="inverse"
+            title="Masz dodatkowe pytania?"
+            lead="Wypełnij formularz, a skontaktujemy się z Tobą wkrótce!"
+          />
           <ContactForm />
         </div>
       </div>
@@ -240,6 +251,9 @@ export function Contact() {
 /* --------------------------------------------------------------- Footer --- */
 
 export function Footer() {
+  // Ikony z adresem "#" prowadziłyby donikąd – pokazujemy tylko uzupełnione profile.
+  const socialLinks = SOCIAL_LINKS.filter((s) => s.href && s.href !== "#");
+
   return (
     <footer className="bg-surface-alt px-6 py-15">
       <div className="flex flex-col items-center justify-center gap-12 xl:flex-row xl:gap-30">
@@ -247,8 +261,8 @@ export function Footer() {
           <div className="flex flex-col items-center gap-6 text-center md:flex-row md:items-start md:gap-12 md:text-left">
             <img src="/icons/logo-footer.svg" width={150} height={132} alt="FireWatch" />
             <div className="flex w-[238px] flex-col items-center justify-between gap-6 md:h-full md:items-start md:gap-0">
-              <Text variant="label">FireWatch</Text>
-              <Text as="address" variant="label" className="not-italic">
+              <Text className="text-lg font-semibold text-ink-strong">FireWatch</Text>
+              <Text as="address" className="text-ink not-italic">
                 {ADDRESS.map((line, i) => (
                   <span key={line} className="block">
                     {line}
@@ -256,19 +270,21 @@ export function Footer() {
                   </span>
                 ))}
               </Text>
-              <ul className="flex items-center gap-4">
-                {SOCIAL_LINKS.map((s) => (
-                  <li key={s.name}>
-                    <a
-                      href={s.href}
-                      aria-label={s.name}
-                      className="flex size-6 items-center justify-center transition-opacity hover:opacity-60"
-                    >
-                      <img src={s.icon} width={s.width} height={s.height} alt="" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              {socialLinks.length > 0 && (
+                <ul className="-mx-2.5 flex items-center">
+                  {socialLinks.map((s) => (
+                    <li key={s.name}>
+                      <a
+                        href={s.href}
+                        aria-label={s.name}
+                        className="flex size-11 items-center justify-center transition-opacity hover:opacity-60"
+                      >
+                        <img src={s.icon} width={s.width} height={s.height} alt="" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
           <nav aria-label="Stopka" className="flex flex-col items-center justify-between gap-4 md:w-[154px] md:items-start md:gap-0">
@@ -278,7 +294,7 @@ export function Footer() {
                 as="a"
                 href={l.href}
                 variant="label"
-                className="whitespace-nowrap uppercase transition-colors hover:text-brand"
+                className="whitespace-nowrap py-1 transition-colors hover:text-brand"
               >
                 {l.label}
               </Text>
@@ -287,7 +303,9 @@ export function Footer() {
         </div>
         <div className="flex w-[354px] max-w-full flex-col items-center justify-between gap-4 xl:h-[234px] xl:gap-0">
           <img src="/icons/shield-gray.svg" width={165} height={193} alt="" className="h-auto w-[110px] md:w-[165px]" />
-          <Text variant="label">FireWatch @ 2025.</Text>
+          <Text variant="small" className="text-muted">
+            © {new Date().getFullYear()} FireWatch
+          </Text>
         </div>
       </div>
     </footer>

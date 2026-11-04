@@ -23,15 +23,18 @@ type TextFieldProps = {
   className?: string;
 };
 
+// 16px tekstu – iOS nie przybliża strony przy fokusie; py daje cel dotyku ≥ 44px.
+// Fokus pogrubia linię cieniem (bez przesunięcia układu).
 const controlClasses = cn(
-  "block w-full rounded-none border-0 border-b-[0.5px] border-line-inverse bg-transparent pb-2 text-xs text-white outline-none",
-  "transition-colors placeholder:text-2xs placeholder:capitalize placeholder:text-line-inverse",
-  "focus:border-brand data-invalid:border-brand",
+  "block w-full rounded-none border-0 border-b border-line-inverse bg-transparent py-3 text-base text-white outline-none",
+  "transition-[border-color,box-shadow] duration-200",
+  "focus:border-brand focus:shadow-[0_1px_0_0_var(--color-brand)]",
+  "data-invalid:border-danger-inverse data-invalid:shadow-[0_1px_0_0_var(--color-danger-inverse)]",
 );
 
 /**
- * Pole tekstowe z linią na ciemnym tle. Etykieta jest dostępna dla czytników
- * ekranu, a wizualnie pełni ją placeholder (zgodnie z designem).
+ * Pole tekstowe z linią na ciemnym tle. Etykieta jest zawsze widoczna,
+ * więc nie znika po rozpoczęciu pisania (w przeciwieństwie do placeholdera).
  */
 export function TextField({
   name,
@@ -44,31 +47,36 @@ export function TextField({
   formatMessage = "Sprawdź poprawność wpisanej wartości.",
   className,
 }: TextFieldProps) {
-  const placeholder = required ? `${label}*` : label;
-
   return (
     <Field.Root name={name} className={cn("flex flex-col", className)}>
-      <Field.Label className="sr-only">{label}</Field.Label>
+      <Field.Label className="text-xs font-medium uppercase tracking-[0.06em] text-line-inverse">
+        {label}
+        {required ? (
+          <span aria-hidden className="ml-0.5 text-danger-inverse">
+            *
+          </span>
+        ) : (
+          <span className="normal-case tracking-normal"> (opcjonalnie)</span>
+        )}
+      </Field.Label>
       {multiline ? (
         <Field.Control
           required={required}
-          placeholder={placeholder}
-          render={<textarea rows={2} />}
-          className={cn(controlClasses, "h-10 min-h-10 resize-y")}
+          render={<textarea rows={4} />}
+          className={cn(controlClasses, "min-h-24 resize-y leading-6")}
         />
       ) : (
         <Field.Control
           type={type}
           required={required}
-          placeholder={placeholder}
           autoComplete={autoComplete}
-          className={cn(controlClasses, "h-[22px]")}
+          className={controlClasses}
         />
       )}
-      <Field.Error match="valueMissing" className="mt-1.5 text-2xs text-brand">
+      <Field.Error match="valueMissing" className="mt-1.5 text-sm text-danger-inverse">
         {requiredMessage}
       </Field.Error>
-      <Field.Error match="typeMismatch" className="mt-1.5 text-2xs text-brand">
+      <Field.Error match="typeMismatch" className="mt-1.5 text-sm text-danger-inverse">
         {formatMessage}
       </Field.Error>
     </Field.Root>

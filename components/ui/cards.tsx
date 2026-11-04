@@ -18,12 +18,12 @@ type FeatureItemProps = {
 
 export function FeatureItem({ icon, title, children, className }: FeatureItemProps) {
   return (
-    <article className={cn("flex items-start gap-4 sm:gap-6 sm:p-2.5", className)}>
+    <article className={cn("flex w-full max-w-[430px] items-start gap-4 sm:gap-6 sm:p-2.5", className)}>
       <div className="flex size-12 shrink-0 items-center justify-center">
         <img src={icon.src} width={icon.width} height={icon.height} alt="" />
       </div>
       <Separator orientation="vertical" className="mt-2.5 h-[29px] self-start" />
-      <div className="flex flex-1 flex-col gap-4 py-1.5 sm:w-[310px] sm:flex-none">
+      <div className="flex min-w-0 flex-1 flex-col gap-3 py-1.5">
         <Heading as="h3" variant="title">
           {title}
         </Heading>
@@ -48,26 +48,35 @@ export function StepCard({ marker, title, children, className }: StepCardProps) 
   return (
     <article
       className={cn(
-        "group flex min-h-[252px] w-[calc(50%-12px)] flex-col gap-10 overflow-hidden bg-white pt-[30px] shadow-card sm:w-[175px]",
+        "group flex w-full flex-col overflow-hidden bg-white shadow-card",
+        "sm:min-h-[252px] sm:basis-[calc((100%-48px)/3)] sm:gap-10 sm:pt-[30px] lg:basis-0 lg:flex-1",
         "transition-[background-color,box-shadow] duration-300 hover:bg-surface-card-dark hover:shadow-card-hover",
         className,
       )}
     >
-      <div className="flex flex-col items-center gap-3 px-5 text-center">
+      {/* Mobile: numer po lewej, tekst obok. Od sm: kolumna wyśrodkowana. */}
+      <div className="flex items-start gap-4 px-4 py-4 sm:flex-col sm:items-center sm:gap-3 sm:px-5 sm:py-0 sm:text-center lg:px-4">
         <span
           className={cn(
-            "flex size-[55px] items-center justify-center rounded-full bg-brand text-xl font-semibold text-white",
+            "flex size-11 shrink-0 items-center justify-center rounded-full bg-brand text-lg font-semibold text-white sm:size-[55px] sm:text-xl",
             "transition-colors duration-300 group-hover:bg-white group-hover:text-brand",
           )}
         >
           {marker}
         </span>
-        <Heading as="h3" variant="card" className="min-h-[45px] transition-colors duration-300 group-hover:text-snow">
-          {title}
-        </Heading>
-        <Text variant="caption" className="transition-colors duration-300 group-hover:text-snow">
-          {children}
-        </Text>
+        <div className="flex min-w-0 flex-col gap-1 sm:gap-3">
+          <Heading
+            as="h3"
+            variant="card"
+            // Rezerwa na 3 wiersze tytułu – opisy we wszystkich kartach startują na tej samej wysokości.
+            className="transition-colors duration-300 group-hover:text-snow sm:flex sm:min-h-[63px] sm:items-center sm:justify-center"
+          >
+            {title}
+          </Heading>
+          <Text variant="small" className="text-muted transition-colors duration-300 group-hover:text-snow">
+            {children}
+          </Text>
+        </div>
       </div>
       <Separator className="mt-auto" />
     </article>
@@ -88,7 +97,7 @@ type TestimonialCardProps = {
 
 export function TestimonialCard({ avatar, name, role, children, className }: TestimonialCardProps) {
   return (
-    <figure className={cn("flex w-[241px] flex-col items-center gap-6 p-2.5", className)}>
+    <figure className={cn("flex w-full max-w-[280px] flex-col items-center gap-6 p-2.5", className)}>
       <Avatar src={avatar} alt={name} />
       <div className="flex w-full flex-col items-center gap-6 py-1.5 text-center">
         <Text as="blockquote" variant="quote">
