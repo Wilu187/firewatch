@@ -15,9 +15,12 @@ const variants = {
   outline: "border-3 border-white bg-transparent hover:not-data-disabled:bg-white hover:not-data-disabled:text-surface-dark",
 } as const;
 
+// Przycisk to etykieta akcji, nie nagłówek: wersaliki z rozstrzałem, rozmiar nie przekracza tekstu wiodącego.
+// Waga przycisku pochodzi z pola i paddingu, a nie z wielkości liter.
 const sizes = {
-  md: "px-10 py-[15px] text-base",
-  lg: "px-6 py-3.5 text-lg sm:px-10 sm:py-[15px] sm:text-4xl",
+  md: "px-10 py-[15px] text-sm tracking-[0.06em]",
+  // Na telefonie 14px mieści najdłuższą etykietę („Umów bezpłatną konsultację”) w jednym wierszu.
+  lg: "px-4 py-4 text-sm tracking-[0.06em] sm:px-12 sm:py-5 sm:text-lg",
 } as const;
 
 type ButtonProps = Omit<ComponentProps<typeof BaseButton>, "className"> & {

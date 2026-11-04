@@ -12,13 +12,16 @@
   --color-black: #000000;
   --color-transparent: transparent;
 
-  --color-brand: #e04c4c; /* czerwień FireWatch – akcent, CTA, tytuły sekcji */
-  --color-brand-hover: #c73b3b;
+  /* Czerwień UI jest odrobinę ciemniejsza niż w logo (#e04c4c), żeby tytuły
+     sekcji i biały tekst na przyciskach spełniały WCAG AA (≥ 4.5:1). */
+  --color-brand: #cf3a3a; /* czerwień FireWatch – akcent, CTA, tytuły sekcji */
+  --color-brand-hover: #b53030;
+  --color-danger-inverse: #ff8f8f; /* komunikaty błędów na ciemnym tle */
 
   --color-ink: #262626; /* podstawowy tekst */
   --color-ink-strong: #232323; /* nawigacja, stopka */
   --color-ink-soft: #3c3c3c; /* cytaty */
-  --color-muted: #898989; /* opisy drugorzędne */
+  --color-muted: #6b6b6b; /* opisy drugorzędne (≥ 4.9:1 na jasnych tłach) */
   --color-line: #e3e3e3; /* obramowania na jasnym tle */
   --color-line-inverse: #b9b9b9; /* linie i placeholdery na ciemnym tle */
   --color-snow: #f3f3f3; /* tekst na ciemnym tle */
@@ -32,27 +35,29 @@
   /* Typografia */
   --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
 
+  /* Skala typograficzna: interlinia maleje wraz z rozmiarem
+     (tekst ciągły ~1.6, nagłówki ~1.15–1.3). 12px to dolna granica. */
   --text-*: initial;
-  --text-2xs: 10px;
-  --text-2xs--line-height: normal;
   --text-xs: 12px;
-  --text-xs--line-height: normal;
+  --text-xs--line-height: 1.45;
   --text-sm: 14px;
-  --text-sm--line-height: normal;
+  --text-sm--line-height: 1.5;
   --text-base: 16px;
-  --text-base--line-height: normal;
+  --text-base--line-height: 1.6;
   --text-lg: 18px;
-  --text-lg--line-height: normal;
+  --text-lg--line-height: 1.55;
   --text-xl: 20px;
-  --text-xl--line-height: normal;
+  --text-xl--line-height: 1.5;
   --text-2xl: 22px;
-  --text-2xl--line-height: normal;
+  --text-2xl--line-height: 1.4;
   --text-3xl: 24px;
-  --text-3xl--line-height: normal;
+  --text-3xl--line-height: 1.3;
   --text-4xl: 28px;
-  --text-4xl--line-height: normal;
+  --text-4xl--line-height: 1.25;
   --text-5xl: 36px;
-  --text-5xl--line-height: normal;
+  --text-5xl--line-height: 1.18;
+  --text-6xl: 44px;
+  --text-6xl--line-height: 1.12;
 
   /* Breakpointy (mobile-first) */
   --breakpoint-*: initial;
@@ -72,13 +77,52 @@
   --container-content: 1000px;
 }
 
+/* Oś strony: sekcje ze zdjęciem do krawędzi wyrównują kolumnę tekstu
+   do tej samej linii co kontener treści (1000px), z minimalnym marginesem 1.5rem (jak px-6 sekcji). */
+@utility pl-spine {
+  padding-left: max(1.5rem, calc((100% - var(--container-content)) / 2));
+}
+
+@utility pr-spine {
+  padding-right: max(1.5rem, calc((100% - var(--container-content)) / 2));
+}
+
 @layer base {
   html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 100px;
+    /* Wysokość przyklejonej nawigacji + oddech, żeby kotwice nie chowały nagłówków. */
+    scroll-padding-top: 104px;
+
+    @media (width >= 60rem) {
+      scroll-padding-top: 120px;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
     @apply bg-surface font-sans text-ink antialiased;
+    caret-color: var(--color-brand);
+  }
+
+  /* Łamanie wierszy: nagłówki wyważone, akapity bez pojedynczych sierot. */
+  :where(h1, h2, h3, blockquote) {
+    text-wrap: balance;
+  }
+
+  :where(p, li, figcaption) {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-brand);
+    color: var(--color-white);
+  }
+
+  /* Wspólny pierścień fokusu dla linków i przycisków bez własnego stylu. */
+  :where(a, button, summary):focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
   }
 }

@@ -68,7 +68,7 @@ export function SectionHeader({
   return (
     <header
       className={cn(
-        "flex flex-col gap-3",
+        "flex flex-col gap-3 sm:gap-4",
         align === "center" ? "items-center text-center" : "items-start text-left",
         className,
       )}
@@ -83,10 +83,12 @@ export function SectionHeader({
       </Heading>
       {lead && (
         <div
+          // Szerokość ogranicza długość wiersza do ~65 znaków.
+          // Na ciemnym tle cienki krój traci czytelność – podnosimy wagę o stopień.
           className={cn(
-            "flex flex-col gap-3.5",
-            leadSize === "lg" ? "max-w-[766px]" : "max-w-[824px]",
-            tone === "inverse" && "text-snow",
+            "flex flex-col gap-3",
+            leadSize === "lg" ? "max-w-[700px]" : "max-w-[640px]",
+            tone === "inverse" && "text-snow [&_p]:font-normal",
           )}
         >
           {typeof lead === "string" ? (

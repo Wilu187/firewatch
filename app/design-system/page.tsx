@@ -16,12 +16,13 @@ export const metadata: Metadata = {
 };
 
 const COLORS = [
-  ["brand", "bg-brand", "#e04c4c"],
-  ["brand-hover", "bg-brand-hover", "#c73b3b"],
+  ["brand", "bg-brand", "#cf3a3a"],
+  ["brand-hover", "bg-brand-hover", "#b53030"],
+  ["danger-inverse", "bg-danger-inverse", "#ff8f8f"],
   ["ink", "bg-ink", "#262626"],
   ["ink-strong", "bg-ink-strong", "#232323"],
   ["ink-soft", "bg-ink-soft", "#3c3c3c"],
-  ["muted", "bg-muted", "#898989"],
+  ["muted", "bg-muted", "#6b6b6b"],
   ["line", "bg-line", "#e3e3e3"],
   ["line-inverse", "bg-line-inverse", "#b9b9b9"],
   ["snow", "bg-snow", "#f3f3f3"],
@@ -140,7 +141,7 @@ export default function DesignSystemPage() {
             <FeatureItem icon={REASONS[0].icon} title={REASONS[0].title}>
               {REASONS[0].text}
             </FeatureItem>
-            <StepCard marker={TRAININGS[0].marker} title={TRAININGS[0].title}>
+            <StepCard marker={TRAININGS[0].marker} title={TRAININGS[0].title} className="sm:max-w-[200px]">
               {TRAININGS[0].text}
             </StepCard>
             <TestimonialCard avatar={TESTIMONIALS[2].avatar} name={TESTIMONIALS[2].name} role={TESTIMONIALS[2].role}>
